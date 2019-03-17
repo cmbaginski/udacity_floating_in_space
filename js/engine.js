@@ -170,7 +170,6 @@ var Engine = (function(global) {
      */
     Resources.load([
         'images/outerspace-block.png',
-        'images/space-block.png',
         'images/enemy-astroid.png',
         'images/char-astro.png'
     ]);
