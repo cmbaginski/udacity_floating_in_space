@@ -3,7 +3,7 @@ var Enemy = function(x,y) {
     this.x = x;
     this.y = y;
     this.sprite = 'images/enemy-astroid.png';
-    this.height = 65;
+    this.height = 35;
     this.width = 95;
     this.collision = false;
 };
@@ -16,7 +16,6 @@ Enemy.prototype.update = function(dt) {
     } else {
         this.x += 250 * dt;
     }
-
     //collision
     if (collision(player.x, player.y, player.width, player.height, this.x, this.y, this.width, this.height)) {
         this.collision = true;
@@ -40,12 +39,12 @@ var Player = function(x,y) {
     this.x = x;
     this.y = y;
     this.sprite = 'images/char-astro.png';
-    this.height = 75;
+    this.height = 60;
     this.width = 65;
 };
 
 Player.prototype.update = function(dt) {
-    if (game && player.y === -15) {
+    if (game && this.y === -15) {
         game = false;
         winner();
     }
@@ -100,5 +99,6 @@ function collision(px, py, ph, pw, ex, ey, eh, ew) {
 
 //show winning modal
 function winner () {
-    $("#winner").modal('show');
+    //$("#winner").modal('show');
+    modal.style.display = "block";
 }

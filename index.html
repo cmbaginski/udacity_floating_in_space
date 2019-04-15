@@ -2,33 +2,28 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Effective JavaScript: Frogger</title>
+    <title>floating in space</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
+<div class="container">
 <h1>welcome to <code>floating in space</code></h1>
-<p>You're floating in space and came across an astroid belt!!! Get passed all the asteroids to survive.</p>
-<div class="row">
-    <div class="modal" id="winner" tabindex="-1" role="dialog" aria-labelledby="winnerLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <h1>Congratulations!</h1>
-                    <p>YOU SURVIVED THE ASTROID BELT!</p>
-                </div>
-                <div class="modal-footer">
-                    <!--<div id=restartButton><button type="button" class="btn btn-secondary" >Reset</button></div>-->
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
+    <!-- modal -->
+    <div id="winner" class="modal" tabindex="-1" role="dialog" aria-labelledby="winnerLabel" aria-hidden="true">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+          <h1>Congratulations!</h1>
+          <p>YOU SURVIVED THE ASTEROID BELT!</p>
+      </div>
+
     </div>
 </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="js/resources.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/modal.js"></script>
     <script src="js/engine.js"></script>
 </body>
 </html>
