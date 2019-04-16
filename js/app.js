@@ -1,33 +1,58 @@
 // ENEMIES
-var Enemy = function(x,y) {
+var Enemy = function(x,y, speed) {
     this.x = x;
     this.y = y;
     this.sprite = 'images/enemy-astroid.png';
     this.height = 35;
     this.width = 95;
-    this.collision = false;
+    this.speed = 100;
 };
 
 // Update the enemy's position
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    if (this.x > ctx.canvas.width + this.width){
-        this.x = -250 * Math.floor(Math.random() * 3) + 1;
+    this.x += this.speed * dt;
+    if (this.x > ctx.canvas.width + this.width) {
+        this.x = this.speed * Math.floor(Math.random() * 3) + 1;
     } else {
-        this.x += 250 * dt;
+        this.x += this.speed * dt;
     }
-    //collision
-    if (collision(player.x, player.y, player.width, player.height, this.x, this.y, this.width, this.height)) {
-        this.collision = true;
-            if (player) {
-                player.x = 202;
-                player.y = 400;
-            }
-    } else {
-        this.collision = false;
+    collisionCheck(this);
+};
+
+
+var collisionCheck = function(anEnemy) {
+    // check for collision between enemy and player
+    if (
+        player.y + 131 >= anEnemy.y + 90
+        && player.x + 25 <= anEnemy.x + 88
+        && player.y + 73 <= anEnemy.y + 135
+        && player.x + 76 >= anEnemy.x + 11) {
+        console.log('collided');
+        player.x = 202;
+        player.y = 383;
     }
 
+    // check for player reaching top of canvas and winning the game
+
+    if (player.y + 63 <= 0) {
+        player.x = 202;
+        player.y = 383;
+    }
+
+    // check if player runs into left, bottom, or right canvas walls
+    // prevent player from moving beyond canvas wall boundaries
+    if (player.y > 383 ) {
+        player.y = 383;
+    }
+    if (player.x > 402) {
+        player.x = 402;
+    }
+    if (player.x < 2.5) {
+        player.x = 2.5;
+    }
 };
+
 
 // Draw the enemy on the screen
 Enemy.prototype.render = function() {
@@ -43,14 +68,7 @@ var Player = function(x,y) {
     this.width = 65;
 };
 
-Player.prototype.update = function(dt) {
-    if (game && this.y === -15) {
-        game = false;
-        winner();
-    }
-};
-
-// Draw the enemy on the screen
+// Draw the player on the screen
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
@@ -63,16 +81,17 @@ Player.prototype.handleInput = function (direction) {
         this.x -= horz;
     } else if (direction === 'right' && this.x + horz < ctx.canvas.width){
         this.x += horz;
-
+    //check if player is at top/winner
     } else if (direction === 'up' && this.y - vert >= -vert) {
         this.y -= vert;
-
-    } else if (direction === 'down' && this.y + vert < ctx.canvas.height -150){
+        if (this.y <= 15) {
+            modal.style.display = "block";
+        }
+    } else if (direction === 'down' && this.y + vert < ctx.canvas.height -200){
         this.y += vert;
     }
 };
 
-var game = true;
 const enemyStart = [55, 140, 230];
 const player = new Player(202, 400);
 let allEnemies = enemyStart.map((y, index) => {
@@ -88,17 +107,6 @@ document.addEventListener('keyup', function(e) {
         39: 'right',
         40: 'down'
     };
-
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
-//collision
-function collision(px, py, ph, pw, ex, ey, eh, ew) {
-    return (Math.abs(px - ex) * 2 < pw + ew) && (Math.abs(py - ey) * 2 < ph + eh)
-}
-
-//show winning modal
-function winner () {
-    //$("#winner").modal('show');
-    modal.style.display = "block";
-}
